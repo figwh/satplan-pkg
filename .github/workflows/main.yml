@@ -61,4 +61,4 @@ jobs:
       - id: build
         run: docker build -t figwh/satplan:latest -f Dockerfile_github .
       - id: archive
-        run: docker push t figwh/satplan:latest
+        run: docker push figwh/satplan:latest
