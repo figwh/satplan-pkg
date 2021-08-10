@@ -51,7 +51,8 @@ jobs:
           token: ${{ secrets.MY_REPO }}  
           ref: main
           path: satplan-web 
-          
+      - id: step1
+        run: pwd && ls
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
