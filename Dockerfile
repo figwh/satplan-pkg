@@ -7,14 +7,12 @@ RUN cd orbitTools/core && make
 RUN cd orbitTools/orbit && make 
 RUN cd calPath && make 
 
-FROM golang:1.15 AS server_base
+FROM golang:1.15 AS server_builder
 WORKDIR /server
 COPY satplan-server/go.mod .
 RUN GO111MODULE=on GOPROXY="https://goproxy.cn" go mod download
-
-FROM server_base AS server_builder
 COPY satplan-server .
-RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -a -ldflags '-extldflags "-static"'  -o server
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -a -ldflags '-extldflags "-static"' -o server
 
 FROM node:12.21.0-slim AS web_builder
 WORKDIR /web
