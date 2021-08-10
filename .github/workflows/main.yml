@@ -50,8 +50,14 @@ jobs:
           repository: figwh/satplan-web.git
           token: ${{ secrets.MY_REPO }}  
           ref: main
-          path: satplan-web
-      
+          path: satplan-web 
+          
+      - name: Nix Shell
+        uses: workflow/nix-shell-action@v1
+        with:
+          interpreter: bash # default is bash
+          packages: bash # default is bash
+          script: pwd && ls
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
