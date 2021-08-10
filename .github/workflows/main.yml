@@ -60,4 +60,5 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - id: build
         run: docker build -t figwh/satplan:latest -f Dockerfile_github .
-     
+      - id: archive
+        run: docker push t figwh/satplan:latest
