@@ -31,22 +31,25 @@ jobs:
       - name: Checkout calpath
         uses: actions/checkout@v2
         with:
-          repository: github.com/figwh/calpath.git
-          token: ${{ secrets.MY_REPO }} # `GitHub_PAT` is a secret that contains your PAT
+          repository: figwh/calpath.git
+          token: ${{ secrets.MY_REPO }} 
+          ref: main
           path: calpath          
       
       - name: Checkout satplan server
         uses: actions/checkout@v2
         with:
-          repository: github.com/figwh/satplan-server.git
-          token: ${{ secrets.MY_REPO }} # `GitHub_PAT` is a secret that contains your PAT
+          repository: figwh/satplan-server.git
+          token: ${{ secrets.MY_REPO }} 
+          ref: main
           path: satplan-server
 
       - name: Checkout satplan web
         uses: actions/checkout@v2
         with:
-          repository: github.com/figwh/satplan-web.git
+          repository: figwh/satplan-web.git
           token: ${{ secrets.MY_REPO }}  
+          ref: main
           path: satplan-web
       
       - name: Login to DockerHub
