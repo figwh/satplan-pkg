@@ -52,7 +52,7 @@ jobs:
           ref: main
           path: satplan-web 
       - id: copy
-        run: mv ./package/* . 
+        run: mv ./package/* . && ls
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
