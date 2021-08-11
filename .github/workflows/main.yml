@@ -61,4 +61,13 @@ jobs:
       - id: build
         run: docker build -t figwh/satplan:latest -f Dockerfile_github .
       - id: archive
-        run: docker push figwh/satplan:latest
+        run: docker push figwh/satplan:latest      
+
+      - name: SSH remote run 
+        uses: fifsky/ssh-action@master
+        with:
+         command: /data/update-satplan.sh
+         host: ${{ secrets.VPS_HOST }}
+         port: ${{secrets.VPS_PORT}}
+         user: ${{secrets.VPS_USER}}
+         key: ${{ secrets.VPS_PRIVATE_KEY}}
