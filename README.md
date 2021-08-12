@@ -56,7 +56,7 @@ For calculating satellite tracks and sensor paths, written in C++, the tracks ca
 The backend, developed in Go, provide APIs for satplan-web.
 
 ### satplan-web
-The frontend, developed in typescript and antd pro, openlayers is used to display world map and planning results.
+The frontend, developed in typescript and react, antd pro is used as web framework, openlayers is used to display world map and planning results.
 
 ### satplan-pkg
 For packaging, contains Dockerfile, github action and documents.
