@@ -1,24 +1,63 @@
-# satplan-pkg
-package satplan projects
+## About satplan
+Satplan is a mission planning tool for remote sensing satellites, user could get the sensor paths information of the interest area in the next few days.
 
-1. calpath
-1.1 git clone
-1.2 install sqlite3
-1.3 make
+Here is a demo site: https://satplan.fogsea.ga
 
-2. satplan
-2.1 git clone
-2.2 go mod download
-2.3 go build
+### Key features
+* Automatic calculation of satellite tracks and sensor paths, where the satellite tracks calculation is based on SGP4
+* Satellites and sensors management, users could custom satellites or sensors
+* Mission planning, auto filter sensor paths by interest area and time span
+* Display planning results on map, based on openlayers
 
-3. satplan-web
-3.1 git clone
-3.2 npm install
-3.3 yarn run build
+## Usage
+Use the docker-compose file below to start.
+```yml
+version: "3"
+services:
+  satplan:
+    image: figwh/satplan:latest
+    container_name: satplan
+    environment:
+      - BASE_URL=http://localhost:8080/
+      - DATA_FOLDER=/app/data
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 80:80
+    restart: unless-stopped
+```
 
-4. docker
-4.1 set nginx as base container
-4.2 cp calpath, satplan, satplan-web, sat.db
-4.3 set data folder
-4.4 start satplan as background service
-4.5 start nginx
+### Mission Planning
+After container started, browse http://localhost and will get the interface. The default satellites contains HJ-1A and HJ-1B, users could add satellites or sensors on demand.
+![image](./resources/check_sen.png)
+
+Check sensors, then click "Draw Area" button and draw a rectangle on map, and you will see the sensor paths across the rectangle area, click the path will show its information.
+![image](./resources/planning_result.png)
+
+Users could also check or uncheck sensors, change the planning time, the result will change on map automatically.
+
+### Satellite and sensor management
+Browse http://localhost/admin, input default credentials(username: test@test.com, password: 12345678) and it will change to satellite and sensor management page. 
+![image](./resources/sat_manage.png)
+
+New satellite need TLE, which is from [NOARD](http://www.celestrak.com/NORAD/elements/resource.txt), it will update at 00:00 am UTC automatically.
+![image](./resources/new_sat.png)
+
+## Structure
+Satplan consists of 4 parts: calpath, satplan-server, satplan-web, satplan-pkg.
+
+### database
+Satplan use sqlite to keep it smart, but other databases such as mysql could also be supported.
+
+### calpath
+For calculating satellite tracks and sensor paths, written in C++, the tracks calculation is implemented by [orbittools](http://www.zeptomoby.com/satellites/), which is from Michael F. Henry.
+
+### satplan-server
+The backend, developed in Go, provide APIs for satplan-web.
+
+### satplan-web
+The frontend, developed in typescript and antd pro, openlayers is used to display world map and planning results.
+
+### satplan-pkg
+For packaging, contains Dockerfile, github action and documents.
+
