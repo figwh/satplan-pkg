@@ -10,7 +10,11 @@ Here is a demo site: https://satplan.fogsea.ga
 * Display planning results on map, based on openlayers
 
 ## Usage
-Use the docker-compose file below to start.
+* Install [Docker](https://docs.docker.com/installation/#installation)
+
+* Install [docker-compose](https://docs.docker.com/compose/install/)
+
+Create docker-compose.yml as below.
 ```yml
 version: "3"
 services:
@@ -26,6 +30,12 @@ services:
       - 80:80
     restart: unless-stopped
 ```
+
+Run with docker-compose:
+```bash
+docker-compose up -d
+```
+Satplan will run on http://localhost
 
 ### Mission Planning
 After container started, browse http://localhost and will get the interface. The default satellites contains HJ-1A and HJ-1B, users could add satellites or sensors on demand.
